@@ -15,7 +15,7 @@ class CurrencyConverterApp:
         self.root.configure(bg="#1e1f26")  # Vibrant dark background
 
         self.api_url = "https://api.exchangerate-api.com/v4/latest/USD"
-        self.username = None  # Track username once logged in
+        self.username = None
         self.conn = sqlite3.connect("currency_converter.db")
         self.cursor = self.conn.cursor()
 
@@ -23,13 +23,11 @@ class CurrencyConverterApp:
 
         self.currencies = self.fetch_currencies()
 
-        # Vibrant styles
         label_style = {"bg": "#1e1f26", "fg": "#ffffff", "font": ("Arial", 14)}
         entry_style = {"bg": "#2b2d3c", "fg": "#ffffff", "font": ("Arial", 12)}
         button_style = {"bg": "#3c91e6", "fg": "#ffffff", "font": ("Arial", 12, "bold")}
         dropdown_style = {"background": "#2b2d3c", "foreground": "#000000"}
 
-        # Start with the login page
         self.show_login_page()
 
     def setup_database(self):
@@ -181,7 +179,6 @@ class CurrencyConverterApp:
 
         self.root.after(10, self.update_button_position)
 
-        # Set column configuration
         self.root.columnconfigure(1, weight=1)
 
     def update_button_position(self):
