@@ -165,7 +165,7 @@ class CurrencyConverterApp:
         self.to_currency_label.grid(row=3, column=0, padx=10, pady=10, sticky="w")
         self.to_currency_dropdown = ttk.Combobox(self.root, values=list(self.currencies.keys()), **dropdown_style)
         self.to_currency_dropdown.grid(row=3, column=1, padx=10, pady=10, sticky="ew")
-        self.to_currency_dropdown.set("EUR")
+        self.to_currency_dropdown.set("INR")
 
         self.convert_button = tk.Button(self.root, text="Convert", command=self.convert_currency, **button_style)
         self.convert_button.grid(row=4, column=0, columnspan=2, pady=10)
