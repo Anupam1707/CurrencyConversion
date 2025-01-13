@@ -14,8 +14,8 @@ class CurrencyConverterApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Currency Converter")
-        self.root.attributes("-fullscreen", True)  # Set full-screen mode
-        self.root.configure(bg="#1e1f26")  # Vibrant dark background
+        self.root.attributes("-fullscreen", True)
+        self.root.configure(bg="#1e1f26")
 
         self.api_url = "https://api.exchangerate-api.com/v4/latest/USD"
         self.username = None
@@ -57,51 +57,85 @@ class CurrencyConverterApp:
     def show_login_page(self):
         self.clear_root()
 
-        label_style = {"bg": "#1e1f26", "fg": "#ffffff", "font": ("Arial", 14)}
-        entry_style = {"bg": "#2b2d3c", "fg": "#ffffff", "font": ("Arial", 12)}
-        button_style = {"bg": "#3c91e6", "fg": "#ffffff", "font": ("Arial", 12, "bold")}
+        bg_image = Image.open("media/acc.jpg")
+        bg_image = bg_image.resize((self.root.winfo_screenwidth(), self.root.winfo_screenheight()), Image.LANCZOS)
+        bg_image = ImageTk.PhotoImage(bg_image)
 
-        self.login_frame = tk.Frame(self.root, bg="#1e1f26")
-        self.login_frame.pack(pady=50)
+        self.canvas = tk.Canvas(self.root, width=self.root.winfo_screenwidth(), height=self.root.winfo_screenheight())
+        self.canvas.create_image(0, 0, image=bg_image, anchor="nw")
+        self.canvas.image = bg_image
+        self.canvas.pack(fill="both", expand=True)
+
+        label_style = {"bg": "#1e1f26", "fg": "#ffffff", "font": ("Arial", 16)}
+        entry_style = {"bg": "#2b2d3c", "fg": "#ffffff", "font": ("Arial", 14)}
+        button_style = {"bg": "#3c91e6", "fg": "#ffffff", "font": ("Arial", 14, "bold")}
+
+        self.header_label = tk.Label(self.root, text="Welcome to the Currency Converter", font=("Calibri", 35, "bold"), bg="#e85e38", fg="#ffffff")
+        self.header_label.place(relx=0.5, rely=0.0, anchor="n")
+
+        self.login_frame = tk.Frame(self.canvas, bg="", bd=0)
+        self.login_frame.place(relx=0.1, rely=0.5, width=450, height=300, anchor="w")
 
         self.username_label = tk.Label(self.login_frame, text="Username:", **label_style)
-        self.username_label.grid(row=0, column=0, padx=10, pady=10)
+        self.username_label.grid(row=0, column=0, padx=20, pady=10)
         self.username_entry = tk.Entry(self.login_frame, **entry_style)
-        self.username_entry.grid(row=0, column=1, padx=10, pady=10)
+        self.username_entry.grid(row=0, column=1, padx=20, pady=10)
 
         self.password_label = tk.Label(self.login_frame, text="Password:", **label_style)
-        self.password_label.grid(row=1, column=0, padx=10, pady=10)
+        self.password_label.grid(row=1, column=0, padx=20, pady=10)
         self.password_entry = tk.Entry(self.login_frame, show="*", **entry_style)
-        self.password_entry.grid(row=1, column=1, padx=10, pady=10)
+        self.password_entry.grid(row=1, column=1, padx=20, pady=10)
 
         self.login_button = tk.Button(self.login_frame, text="Login", command=self.login, **button_style)
-        self.login_button.grid(row=2, column=0, columnspan=2, pady=10)
+        self.login_button.grid(row=2, column=0, columnspan=2, pady=15)
 
         self.create_account_button = tk.Button(self.login_frame, text="Create Account", command=self.show_create_account_page, **button_style)
         self.create_account_button.grid(row=3, column=0, columnspan=2, pady=10)
 
+        self.exit_button = tk.Button(self.root, text="Exit", command=sys.exit, font=("Arial", 16, "bold"), bg="#ff0000", fg="#ffffff")
+        self.exit_button.place(relx=1, rely=0.0, anchor="ne")
+
     def show_create_account_page(self):
         self.clear_root()
 
-        label_style = {"bg": "#1e1f26", "fg": "#ffffff", "font": ("Arial", 14)}
-        entry_style = {"bg": "#2b2d3c", "fg": "#ffffff", "font": ("Arial", 12)}
-        button_style = {"bg": "#3c91e6", "fg": "#ffffff", "font": ("Arial", 12, "bold")}
+        bg_image = Image.open("media/acc.jpg")
+        bg_image = bg_image.resize((self.root.winfo_screenwidth(), self.root.winfo_screenheight()), Image.LANCZOS)
+        bg_image = ImageTk.PhotoImage(bg_image)
 
-        self.create_account_frame = tk.Frame(self.root, bg="#1e1f26")
-        self.create_account_frame.pack(pady=50)
+        self.canvas = tk.Canvas(self.root, width=self.root.winfo_screenwidth(), height=self.root.winfo_screenheight())
+        self.canvas.create_image(0, 0, image=bg_image, anchor="nw")
+        self.canvas.image = bg_image
+        self.canvas.pack(fill="both", expand=True)
+
+        label_style = {"bg": "#1e1f26", "fg": "#ffffff", "font": ("Arial", 16)}
+        entry_style = {"bg": "#2b2d3c", "fg": "#ffffff", "font": ("Arial", 14)}
+        button_style = {"bg": "#3c91e6", "fg": "#ffffff", "font": ("Arial", 14, "bold")}
+
+        self.header_label = tk.Label(self.root, text="Welcome to the Currency Converter", font=("Calibri", 35, "bold"), bg="#e85e38", fg="#ffffff")
+        self.header_label.place(relx=0.5, rely=0.0, anchor="n")
+
+        self.create_account_frame = tk.Frame(self.canvas, bg="", bd=0)
+        self.create_account_frame.place(relx=0.1, rely=0.5, width=450, height=300, anchor="w")
 
         self.create_username_label = tk.Label(self.create_account_frame, text="Username:", **label_style)
-        self.create_username_label.grid(row=0, column=0, padx=10, pady=10)
+        self.create_username_label.grid(row=0, column=0, padx=20, pady=10)
         self.create_username_entry = tk.Entry(self.create_account_frame, **entry_style)
-        self.create_username_entry.grid(row=0, column=1, padx=10, pady=10)
+        self.create_username_entry.grid(row=0, column=1, padx=20, pady=10)
 
         self.create_password_label = tk.Label(self.create_account_frame, text="Password:", **label_style)
-        self.create_password_label.grid(row=1, column=0, padx=10, pady=10)
+        self.create_password_label.grid(row=1, column=0, padx=20, pady=10)
         self.create_password_entry = tk.Entry(self.create_account_frame, show="*", **entry_style)
-        self.create_password_entry.grid(row=1, column=1, padx=10, pady=10)
+        self.create_password_entry.grid(row=1, column=1, padx=20, pady=10)
 
         self.create_account_button = tk.Button(self.create_account_frame, text="Create Account", command=self.create_account, **button_style)
-        self.create_account_button.grid(row=2, column=0, columnspan=2, pady=10)
+        self.create_account_button.grid(row=2, column=0, columnspan=2, pady=15)
+
+        self.create_account_button = tk.Button(self.create_account_frame, text="Login Instead", command=self.show_login_page, **button_style)
+        self.create_account_button.grid(row=3, column=0, columnspan=2, pady=10)
+
+        self.exit_button = tk.Button(self.root, text="Exit", command=sys.exit, font=("Arial", 16, "bold"), bg="#ff0000", fg="#ffffff")
+        self.exit_button.place(relx=1, rely=0.0, anchor="ne")
+
 
     def clear_root(self):
         for widget in self.root.winfo_children():
@@ -115,14 +149,19 @@ class CurrencyConverterApp:
             messagebox.showerror("Input Error", "Please enter both username and password")
             return
 
-        self.cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
-        user = self.cursor.fetchone()
+        try:
+            self.cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+            user = self.cursor.fetchone()
+        except Exception as e:
+            messagebox.showerror("Database Error", f"An error occurred: {str(e)}")
+            return
 
         if user:
             self.username = username
-            self.show_currency_converter_page()
+            self.show_currency_converter_page(username)
         else:
             messagebox.showerror("Login Error", "Invalid username or password")
+
 
     def create_account(self):
         username = self.create_username_entry.get()
@@ -140,7 +179,7 @@ class CurrencyConverterApp:
         except sqlite3.IntegrityError:
             messagebox.showerror("Error", "Username already exists")
 
-    def show_currency_converter_page(self):
+    def show_currency_converter_page(self, username):
         self.clear_root()
 
         bg_image = Image.open("media/home.jpg")
@@ -165,6 +204,9 @@ class CurrencyConverterApp:
 
         self.header_label = tk.Label(self.root, text="Currency Converter", font=("Calibri", 45, "bold"), bg="#e85e38", fg="#ffffff")
         self.header_label.place(relx=0.5, y=50, anchor="n")
+
+        self.logged_in_label = tk.Label(self.root, text=f"Logged in as {username}", **label_style)
+        self.logged_in_label.place(relx=0.09, rely=0.0, anchor="n")
 
         self.amount_label = tk.Label(self.root, text="Amount:", **label_style)
         self.amount_label.place(relx=0.25, y=200, anchor="w")
@@ -195,6 +237,8 @@ class CurrencyConverterApp:
         self.exit_button = tk.Button(self.root, text="Exit", command=sys.exit, font=("Arial", 16, "bold"), bg="#ff0000", fg="#ffffff")
         self.exit_button.place(relx=1, rely=0.0, anchor="ne")
 
+        self.logout = tk.Button(self.root, text="Logout", command=self.show_login_page, font=("Arial", 16, "bold"), bg="#ff0000", fg="#ffffff")
+        self.logout.place(relx=1, rely=1, anchor="se")
 
     def update_button_position(self):
         self.exit_button.place(x=self.root.winfo_width() - 100, y=10, anchor="ne")
