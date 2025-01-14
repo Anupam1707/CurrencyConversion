@@ -9,6 +9,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 import sys
 import matplotlib.pyplot as plt
+from SecuriPy import Text
 
 class CurrencyConverterApp:
     def __init__(self, root):
@@ -150,7 +151,7 @@ class CurrencyConverterApp:
             return
 
         try:
-            self.cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, password))
+            self.cursor.execute("SELECT * FROM users WHERE username = ? AND password = ?", (username, Text.encrypt(password, "currentconv")))
             user = self.cursor.fetchone()
         except Exception as e:
             messagebox.showerror("Database Error", f"An error occurred: {str(e)}")
@@ -172,7 +173,7 @@ class CurrencyConverterApp:
             return
 
         try:
-            self.cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, password))
+            self.cursor.execute("INSERT INTO users (username, password) VALUES (?, ?)", (username, Text.encrypt(password, "currentconv")))
             self.conn.commit()
             messagebox.showinfo("Success", "Account created successfully! Please log in.")
             self.show_login_page()
@@ -206,7 +207,7 @@ class CurrencyConverterApp:
         self.header_label.place(relx=0.5, y=50, anchor="n")
 
         self.logged_in_label = tk.Label(self.root, text=f"Logged in as {username}", **label_style)
-        self.logged_in_label.place(relx=0.09, rely=0.0, anchor="n")
+        self.logged_in_label.place(x=0, y=0, anchor="nw")
 
         self.amount_label = tk.Label(self.root, text="Amount:", **label_style)
         self.amount_label.place(relx=0.25, y=200, anchor="w")
