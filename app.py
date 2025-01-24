@@ -17,7 +17,10 @@ class CurrencyConverterApp:
         self.root.title("Currency Converter")
         self.root.attributes("-fullscreen", True)
         self.root.configure(bg="#1e1f26")
-
+        
+        self.root.bind("<Escape>", self.exit_app)
+        self.root.bind("<Return>", self.handle_enter_key)   
+        
         self.api_url = "https://api.exchangerate-api.com/v4/latest/USD"
         self.username = None
         self.conn = sqlite3.connect("currency_converter.db")
@@ -33,7 +36,14 @@ class CurrencyConverterApp:
         dropdown_style = {"background": "#2b2d3c", "foreground": "#000000"}
 
         self.show_login_page()
+        
+    def exit_app(self, event=None):
+        self.root.destroy()
 
+    def handle_enter_key(self, event=None):
+        if self.root.focus_get() == self.username_entry or self.root.focus_get() == self.password_entry:
+            self.login()
+            
     def setup_database(self):
         self.cursor.execute("""
             CREATE TABLE IF NOT EXISTS users (
@@ -89,7 +99,8 @@ class CurrencyConverterApp:
 
         self.login_button = tk.Button(self.login_frame, text="Login", command=self.login, **button_style)
         self.login_button.grid(row=2, column=0, columnspan=2, pady=15)
-
+        self.username_entry.focus()
+        
         self.create_account_button = tk.Button(self.login_frame, text="Create Account", command=self.show_create_account_page, **button_style)
         self.create_account_button.grid(row=3, column=0, columnspan=2, pady=10)
 
@@ -212,6 +223,8 @@ class CurrencyConverterApp:
         self.amount_label = tk.Label(self.root, text="Amount:", **label_style)
         self.amount_label.place(relx=0.25, y=200, anchor="w")
         self.amount_entry = tk.Entry(self.root, **entry_style)
+        self.amount_entry.place(relx=0.4, y=200, width=300, height=35, anchor="w")
+        self.amount_entry = tk.Entry(self.root, bg="#ffffff", fg="#000000", font=("Arial", 16)) 
         self.amount_entry.place(relx=0.4, y=200, width=300, height=35, anchor="w")
 
         self.from_currency_label = tk.Label(self.root, text="From Currency:", **label_style)
